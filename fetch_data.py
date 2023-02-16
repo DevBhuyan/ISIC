@@ -1,27 +1,29 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Feb 12 19:55:48 2023
-
-@author: dev
-"""
 
 import os
 import tensorflow as tf
 
 input_size = 0
 
-def fetch(base_dir, inp_size, grp):
+def fetch(base_dir, inp_size, grp = 0):
     global input_size 
     input_size = inp_size
     train_dir = base_dir+'Train/'
     test_dir = base_dir+'Test/'
     
-    train_images = train_dir+'IMAGES/'+grp+'/'
-    train_masks = train_dir+'MASKS/'+grp+'/'
-    
-    test_images = test_dir+'IMAGES/'+grp+'/'
-    test_masks = test_dir+'MASKS/'+grp+'/'
+    if grp:
+        train_images = train_dir+'IMAGES/'+grp+'/'
+        train_masks = train_dir+'MASKS/'+grp+'/'
+        
+        test_images = test_dir+'IMAGES/'+grp+'/'
+        test_masks = test_dir+'MASKS/'+grp+'/'
+    else:
+        train_images = train_dir+'IMAGES/'
+        train_masks = train_dir+'MASKS/'
+        
+        test_images = test_dir+'IMAGES/'
+        test_masks = test_dir+'MASKS/'
         
     train_img_paths = []
     train_mask_paths = []
@@ -58,7 +60,6 @@ def load_set(img_path, mask_path):
 
 def create_dataset(img_paths, mask_paths):
     global input_size
-    dataset = tf.data.Dataset.from_tensor_slices((img_paths, mask_paths))
-    dataset = dataset.map(load_set)
+    dataset = tf.data.Dataset.from_tensor_slices((img_paths, mask_paths)).map(load_set)
 
     return dataset
