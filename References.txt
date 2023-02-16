@@ -1,0 +1,4 @@
+https://paperswithcode.com/sota/lesion-segmentation-on-isic-2017
+https://arxiv.org/pdf/1907.04305.pdf
+https://www.researchgate.net/publication/358579654_SuperCon_Supervised_Contrastive_Learning_for_Imbalanced_Skin_Lesion_Classification
+https://arxiv.org/pdf/1703.00523.pdf
