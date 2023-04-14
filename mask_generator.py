@@ -47,7 +47,7 @@ def generator(dst):
     maxIter = 800
     minLabels = 1
     lr = 0.1
-    nConv = 2
+    nConv = 3
     visualize = 1
     stepsize_sim = 1
     stepsize_con = 1
@@ -133,7 +133,7 @@ def generator(dst):
         im_target = target.data.cpu().numpy()
         nLabels = len(np.unique(im_target))
         if visualize:
-            im_target_rgb = np.array([label_colours[ c % nChannel ] for c in im_target])
+            im_target_rgb = np.array([label_colours[c] for c in im_target])
             im_target_rgb = im_target_rgb.reshape( im.shape ).astype( np.uint8 )
             cv2.imshow( "output", im_target_rgb )
             cv2.waitKey(10)
@@ -164,9 +164,12 @@ def generator(dst):
 
     return im_target_rgb
 
+ctr = 5
 for file in os.listdir(base_dir+'IMAGES/'):
     clahe_image = clahe(base_dir+'IMAGES/'+file)
     dst = dullrazor(clahe_image)
     im_target_rgb = generator(dst)
     cv2.imwrite(base_dir+'MASKS/'+file, im_target_rgb)
-    break
+    ctr -= 1
+    if not ctr:
+        break
